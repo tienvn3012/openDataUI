@@ -1,0 +1,46 @@
+<div class="console">
+	<div class="title">{{$ctrl.title}}</div>
+	<div class="chart-type">
+		<ul>
+			<li class="type-item" ng-class="{active:$ctrl.isActive(1)}" ng-click="$ctrl.change_tab(1)"><i class="material-icons">insert_chart</i> Bar</li>
+			<li class="type-item" ng-class="{active:$ctrl.isActive(2)}" ng-click="$ctrl.change_tab(2)"><i class="material-icons">show_chart</i> Line</li>
+			<li class="type-item" ng-class="{active:$ctrl.isActive(3)}" ng-click="$ctrl.change_tab(3)"><i class="material-icons">bubble_chart</i> Scatter</li>
+		</ul>
+	</div>
+	<div class="container">
+		<div class="row">
+			<ul>
+				<li class="wrap col-lg-1 col-md-2 col-sm-4 col-xs-6" ng-repeat="item in $ctrl.items">
+					<div class="chart-item" ng-class="{active : $ctrl.isActiveItem($index)}" 
+						ng-click="$ctrl.toggle_item($index)">
+						<i class="material-icons" ng-if="item.type == 1">translate</i>
+						<i class="material-icons" ng-if="item.type == 2">access_time</i>
+						<i class="material-icons" ng-if="item.type == 3">format_list_numbered</i> 
+						<span>{{item.title}}</span>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="code">
+		<div class="main-70">
+			<div class="input-code">
+				<input type="text" placeholder="ex : Bar label(col_1,col_2) data(col_4,col_5)" class="form-control" name="" />
+			</div>
+			<div class="excute">
+				<button class="btn btn-success display-flex" ng-click="$ctrl.drawChart()">
+					<i class="material-icons">format_paint</i> <span>Draw</span>
+				</button>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="main-70 display-flex">
+			<i class="material-icons">lightbulb_outline</i>
+			<span>[chart type] [label] [data] [-options]</span>
+		</div>
+	</div>
+</div>

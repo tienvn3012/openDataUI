@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="openData">
+<head>
+	<title>OpenData</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="stylesheet" type="text/css" href="/frontend/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/node_modules/nvd3/build/nv.d3.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+
+	 
+	<script type="text/javascript" src="/frontend/bower_components/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="/frontend/bower_components/angular/angular.min.js"></script>
+	<script type="text/javascript" src="/frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/frontend/bower_components/d3/d3.min.js"></script>
+	<script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>
+
+	<script type="text/javascript" src="/frontend/bower_components/angular-resource/angular-resource.min.js"></script>
+	<script type="text/javascript" src="/frontend/bower_components/angular-route/angular-route.min.js"></script>
+
+	
+	<script type="text/javascript" src="js/core/console-item/console-item.module.js"></script>
+	<script type="text/javascript" src="js/core/console-item/console-item.service.js"></script>
+
+  <script type="text/javascript" src="js/core/draw/draw.module.js"></script>
+  <script type="text/javascript" src="js/core/draw/draw.service.js"></script>
+
+  <script type="text/javascript" src="js/core/core.module.js"></script>
+
+  <script type="text/javascript" src="js/graph/graph.module.js"></script>
+  <script type="text/javascript" src="js/graph/graph.component.js"></script>
+
+	<script type="text/javascript" src="js/console/console.module.js"></script>
+	<script type="text/javascript" src="js/console/console.component.js"></script>
+
+  
+	<script type="text/javascript" src="/frontend/app.module.js"></script>
+ 
+	
+
+</head>
+<body>
+  <div class="wapper">
+  	
+  	<!--header-->
+  	<div id="header">
+  		<div class="main">
+  			<div class="logo">
+  				<img src="img/openpaas">
+  			</div>
+  		</div>
+  	</div>
+  	<!--end header-->
+
+  	<!--nav-->
+  	<div id="nav">
+  		<div class="main">
+  			<ul>
+  				<li class="menu-item active"><a href="#">UPLOAD</a></li>
+  				<li class="menu-item"><a href="#">DASHBOARD</a></li>
+  				<li class="menu-item"><a href="#">MY LIBRARY</a></li>
+  				<li class="menu-item"><a href="#">CATALOG</a></li>
+  				<li class="menu-item"><a href="#">SETTING</a></li>
+  				<!-- <div class="clear"></div> -->
+  			</ul>
+  		</div>
+  	</div>
+  	<!--end nav-->
+
+  	<!--content-->
+  	<div id="content">
+  		<div class="main">
+  			<console></console>
+        <graph></graph>
+  		</div>
+  	</div>
+  	<!--end content-->
+
+  </div>
+
+  <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
