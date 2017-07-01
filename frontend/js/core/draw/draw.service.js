@@ -1,8 +1,8 @@
 angular.module("core.draw").
 	factory("drawService", function(){
 		return {
-			test: function(){
-				bar_chart();
+			test: function(data){
+				bar_chart(data);
 			}
 		};
 	});

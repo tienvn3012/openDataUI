@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="/frontend/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/frontend/bower_components/d3/d3.min.js"></script>
 	<script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>
+  <script type="text/javascript" src="js/moment.min.js"></script>
 
 	<script type="text/javascript" src="/frontend/bower_components/angular-resource/angular-resource.min.js"></script>
 	<script type="text/javascript" src="/frontend/bower_components/angular-route/angular-route.min.js"></script>
@@ -26,7 +27,13 @@
   <script type="text/javascript" src="js/core/draw/draw.module.js"></script>
   <script type="text/javascript" src="js/core/draw/draw.service.js"></script>
 
+  <script type="text/javascript" src="js/core/detect-data/detect-data.module.js"></script>
+  <script type="text/javascript" src="js/core/detect-data/detect-data.service.js"></script>
+
   <script type="text/javascript" src="js/core/core.module.js"></script>
+
+  <script type="text/javascript" src="js/input-data/input-data.module.js"></script>
+  <script type="text/javascript" src="js/input-data/input-data.component.js"></script>
 
   <script type="text/javascript" src="js/graph/graph.module.js"></script>
   <script type="text/javascript" src="js/graph/graph.component.js"></script>
@@ -36,6 +43,7 @@
 
   
 	<script type="text/javascript" src="/frontend/app.module.js"></script>
+  <script type="text/javascript" src="/frontend/app.config.js"></script>
  
 	
 
@@ -71,8 +79,9 @@
   	<!--content-->
   	<div id="content">
   		<div class="main">
-  			<console></console>
-        <graph></graph>
+  			<!-- <console></console>
+        <graph></graph> -->
+        <div ng-view></div>
   		</div>
   	</div>
   	<!--end content-->
