@@ -1,6 +1,22 @@
 
 var allData = null;
 
+var formats = [
+    moment.ISO_8601,
+    "MM/DD/YYYY HH:mm:ss",
+    "DD/MM/YYYY HH:mm:ss",
+    "DD/MM/YYYY",
+    "DD/M/YYYY",
+    "D/M/YYYY",
+    "D/MM/YYYY",
+    "MM/DD/YYYY",
+    "YYYY/MM/DD"
+];
+
+var number_format = [
+	"YYYY"
+];
+
 var x = [
 	{
 		key : "x1",
@@ -73,20 +89,9 @@ var x = [
 			},
 		]
 	},
-]
-
-var formats = [
-    moment.ISO_8601,
-    "MM/DD/YYYY HH:mm:ss",
-    "DD/MM/YYYY HH:mm:ss",
-    "DD/MM/YYYY",
-    "DD/M/YYYY",
-    "D/M/YYYY",
-    "D/MM/YYYY",
-    "MM/DD/YYYY",
-    "YYYY/MM/DD",
-    "YYYY"
 ];
+
+
 
 
 
@@ -534,7 +539,11 @@ function classify(char){ //classify data
 			cl[i]['type'] = 0;
 		}else{
 			if (fl) {
-				cl[i]["type"] = 3;
+				if(isYearsData(cl[i]['data'])){
+					cl[i]["type"] = 2;
+				}else{
+					cl[i]["type"] = 3;
+				}
 			}else{
 				if(isDataDatetime(cl[i]['data'])){
 					cl[i]["type"] = 2;
@@ -552,6 +561,10 @@ function isDatetime(str){
 	return moment(str, formats, true).isValid();
 }
 
+function isYear(str){
+	return moment(str,number_format,true).isValid();
+}
+
 function isDataDatetime(array_data){
 	var flag = true;
 	for (var i = 0; i < array_data.length; i++) {
@@ -563,4 +576,25 @@ function isDataDatetime(array_data){
 	if (flag) 
 		return true;
 	return false;
+}
+
+function isYearsData(array){
+	var flag = true;
+	for (var i = 0; i < array.length; i++) {
+		if(isYear(array[i])){
+			if(((i+1) < array.length) && (0<Math.abs(array[i])<=10)){
+				continue;
+			}
+			flag = false;
+			break;
+		}else{
+			flag = false;
+			break;
+		}
+	}
+
+	if (!flag) {
+		return false;
+	}
+	return true;
 }
