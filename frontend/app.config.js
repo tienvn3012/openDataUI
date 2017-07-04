@@ -6,7 +6,7 @@ angular.module("openData").
 				template : '<input-data></input-data>'
 			}).
 			when("/index" , {
-				template : '<console></console><graph></graph>'
+				template : '<console></console><table-data></table-data><graph></graph>'
 			}).
 			otherwise("/input");
 

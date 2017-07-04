@@ -1,0 +1,69 @@
+<div class="table-data">
+	<div class="row">
+		<div class="main">
+			<h4>{{$ctrl.title}}</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="main">
+			<div class="dataset fl-l">
+				<select class="form-control">
+					<option selected>Dataset 1-1</option>
+				</select>
+			</div>
+			<div class="option fl-r display-flex">
+				<label>[Table mode] <input type="checkbox" ng-model="$ctrl.hide" style="vertical-align: sub;"></label>
+			</div>
+		</div>
+	</div>
+	<div class="table-wapper" ng-hide="$ctrl.hide_table()">
+		<div class="main">
+			<table class="table table-stripped table-bordered table-responsive table-hover">
+				<thead class="thead-inverse">
+					<tr>
+						<th>col_1</th>
+						<th>col_2</th>
+						<th>col_3</th>
+						<th>col_4</th>
+						<th>col_5</th>
+						<th>col_6</th>
+						<th>col_7</th>
+						<th>col_8</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+					</tr>
+					<tr>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+					</tr>
+					<tr>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+						<td>abc</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
