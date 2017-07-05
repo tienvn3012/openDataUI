@@ -122,6 +122,28 @@ function bar_chart(data){
 }
 
 
+function horizontal_bar_chart(data){
+	 nv.addGraph(function() {
+    var chart = nv.models.multiBarHorizontalChart()
+        .x(function(d) { return d.x })
+        .y(function(d) { return d.y })
+        // .margin({top: 30, right: 20, bottom: 50, left: 175})
+        .showValues(true)           //Show bar value next to each bar.
+        // .tooltips(true)             //Show tooltips on hover.
+        // .transitionDuration(350)
+        .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+
+
+    d3.select('#chart svg')
+        .datum(data)
+        .call(chart);
+
+    nv.utils.windowResize(chart.update);
+
+    return chart;
+  });
+}
+
 //line chart
 
 var line_data = [ //data demo

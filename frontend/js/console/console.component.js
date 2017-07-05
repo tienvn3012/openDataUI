@@ -73,7 +73,8 @@ angular.module("console").
 			}
 
 			this.drawChart = function(){
-				drawService.test(consoleService.parseToChartData(this.items));
+				var obj = consoleService.parseToChartData(this.items);
+				drawService.test(obj['chart'],obj['data']);
 
 			}
 
