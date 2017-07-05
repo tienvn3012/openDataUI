@@ -489,7 +489,7 @@ function IsNumeric(input){
 function classify(char){ //classify data
 	var cl = [];
 	
-	var labels = []; //detect line of labels
+	var labels = []; //detect line of labels -> headerRow
 	for(var i=0;i<char.length;i++){
 		var flag = true;
 		for(var j=0;j<char[i].length;j++){
@@ -515,42 +515,56 @@ function classify(char){ //classify data
 		}
 	}
 
-	for(var x=0;x<char.length;x++){ 
+	for(var x=0;x<char.length;x++){ //move data item to their column
 		for(var y=0;y<char[x].length;y++){
 			cl[y]['data'].push(char[x][y]);
 		}
 	}
 
-	for(var i=0;i<cl.length;i++){
-		var f = true;
+	//need equal lenght in here first
+	// cut in min lenght of all column
+	cutMinData(cl,minLenghtData(cl));
+	
+
+	for(var i=0;i<cl.length;i++){ //need fix with empty data and number data in string column
+		var f = true; 
 		var fl;
+		var valid = true;
 		for(var j=0;j<cl[i]["data"].length;j++){
+			if(cl[i]["data"][j] == null || cl[i]["data"][j] == ""){
+				valid = false;
+				break;
+			}
 			fl = IsNumeric(cl[i]["data"][j]);
 			if(j === 0){
 				continue;
 			}else{
 				if(fl != IsNumeric(cl[i]['data'][j-1])){
 					f = false;
-					break;
+					// break;
 				}
 			}
 		}
-		if(!f){
-			cl[i]['type'] = 0;
-		}else{
-			if (fl) {
-				if(isYearsData(cl[i]['data'])){
-					cl[i]["type"] = 2;
-				}else{
-					cl[i]["type"] = 3;
-				}
+		if(valid){
+			if(!f){ //type of some item different each other in this column
+				cl[i]['type'] = 0;
 			}else{
-				if(isDataDatetime(cl[i]['data'])){
-					cl[i]["type"] = 2;
+				if (fl) {
+					if(isYearsData(cl[i]['data'])){
+						cl[i]["type"] = 2;
+					}else{
+						cl[i]["type"] = 3;
+					}
 				}else{
-					cl[i]["type"] = 1;
+					if(isDataDatetime(cl[i]['data'])){
+						cl[i]["type"] = 2;
+					}else{
+						cl[i]["type"] = 1;
+					}
 				}
 			}
+		}else{
+			cl[i]['type'] = 4;
 		}
 	}
 
@@ -598,3 +612,30 @@ function isYearsData(array){
 	}
 	return true;
 }
+
+function minLenghtData(data){ //min of all column
+	var min = null;
+	for (var i = 0; i < data.length; i++) {
+	 	if(min == null){
+	 		min = data[i]['data'].length;
+	 	}else{
+	 		if (min > data[i]['data'].length) {
+	 			min = data[i]['data'].length;
+	 		}
+	 	}
+
+	 }
+	 return min;
+}
+
+
+function cutMinData(data,min){ // cut data to min lenght
+	for (var i = 0; i < data.length; i++) {
+		if(data[i]['data'].length > min){
+			while((data[i]['data'].length - min) > 0){
+				data[i]['data'].pop();
+			}
+		}
+	}
+}
+
