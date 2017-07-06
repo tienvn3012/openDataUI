@@ -1,8 +1,5 @@
-angular.module("console").
-	service("consoleService" ,["chartValid", function (chartValid) {
-		var self = this;
-		
-
+angular.module("dashboard").
+	service("dashboardService" ,["chartValid", function (chartValid) {
 		this.renderItems = function(data){
 			var items = [];
 			var item = {};
@@ -11,9 +8,18 @@ angular.module("console").
 				item['index'] = i;
 				item['type'] = data[i]['type'];
 				item['title'] = data[i]['label'];
-				item['active'] = false;
 				item['data'] = data[i]['data'];
 				item['percent'] = data[i]['percent'];
+
+				if((item['type'] == 1) || (item['type'] == 2) && item['label'] == true){
+					item['active'] = true;
+				}else if(item['type'] == 3){
+					item['active'] = true;
+				}else{
+					item['active'] = false;
+				}
+
+
 				items.push(item);
 			}
 			return items;
@@ -57,6 +63,17 @@ angular.module("console").
 			};
 		}
 
-		
+		this.classifyChartId = function(id){
+			switch(id){
+				case 0 : return "VERTICAL_BAR_CHART";
+				case 1 : return "HORIZONTAL_BAR_CHART";
+				case 2 : return "PIE_CHART";
+				case 3 : return "LINE_CHART";
+				case 4 : return "AREA_CHART";
+				case 5 : return "BUBBLE_CHART";
+				case 6 : return "COMBO_BAR_LINE_CHART";
+				default : return "";
+			}
+		}
 
 	}]);

@@ -1,0 +1,37 @@
+data type : 
+-number
+-string
+-date
+-invalid : empty item
+
+equal lenght of each col -> cut 
+
+chart_id : 
+0 : vertical bar chart
+1 : horizontal bar chart
+2 : pie chart
+3 : line chart
+4 : area chart
+5 : bubble chart
+6 : combo bar-line chart
+
+labels have years ?
+	true{
+		all year ? 
+			true -> line chart or area chart
+			false -> combo chart
+	}
+
+	false{
+		title have years ?
+			true{
+				all year ? 
+					true -> line chart or area chart
+					false -> combo
+			}
+			false{
+				label or title is 3 item ? 
+					true -> can draw bubble
+					false -> bar
+			}
+	}

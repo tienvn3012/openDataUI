@@ -1,6 +1,6 @@
 angular.module("question").
 	component("question" ,  {
-		templateUrl : "",
+		templateUrl : "/frontend/js/dashboard/question/question.template.html",
 		controller : function question() {
 			
 		}

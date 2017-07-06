@@ -15,6 +15,7 @@
     "jquery": "2.2.x",
     "d3" : "3.5.17",
     "angular-gridster" : "x.x.x",
-    "material-design-icons" : "x.x.x"
+    "material-design-icons" : "x.x.x",
+    "javascript-detect-element-resize": "~0.5.1"
   }
 }

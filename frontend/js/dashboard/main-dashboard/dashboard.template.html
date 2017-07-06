@@ -1,0 +1,12 @@
+<div class="dashboard">
+	<div gridster="$ctrl.gridsterOpts">
+	<ul>
+		<li class="dash-item" gridster-item="item" ng-repeat="item in $ctrl.dashboardItems">
+			<div class="title">{{item.title}}</div>
+			<div id="{{item.id}}">
+				<svg style="height: 300px; width: 300px;"></svg>
+			</div>
+		</li>
+	</ul>
+	</div>
+</div>

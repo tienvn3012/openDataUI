@@ -323,4 +323,44 @@ a{text-decoration:none;}
 }
 /*end graph*/
 
+/*question*/
+#content .question{
+	width: 28%;
+	box-sizing: border-box;
+	border-right: 1px solid #ccc;
+	height: 500px;
+	float: left;
+}
+/*end question*/
+
+/*dashboard*/
+#content .dashboard{
+	width: 72%;
+	float: right;
+}
+
+#content .dashboard li.dash-item{
+	border: 1px solid #ccc;
+}
+
+#content .dashboard li.dash-item .title{
+	width: 100%;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-indent: 10px;
+	font-weight: bold;
+	background-color: #ddd;
+}
+
+#content .dashboard li.dash-item .chart{
+	width: 96%;
+	margin: auto;
+	margin-top: 10px; 
+}
+
+#content .dashboard li.dash-item .chart svg{
+	width: 100%;
+}
+/*end dashboard*/
+
 /*end content*/
