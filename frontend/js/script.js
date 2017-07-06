@@ -462,7 +462,7 @@ function randomPosition(){
 	return Math.floor((Math.random() * 100))
 }
 
-function bubble_chart(){
+function bubble_chart(id,data){
 	nv.addGraph(function() {
   var chart = nv.models.scatterChart()
                 .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
@@ -477,8 +477,8 @@ function bubble_chart(){
   //We want to show shapes other than circles.
   // chart.scatter.onlyCircles(false);
 
-  d3.select('#chart svg')
-      .datum(bubble_data)
+  d3.select(id)
+      .datum(data)
       .call(chart);
 
   nv.utils.windowResize(chart.update);
