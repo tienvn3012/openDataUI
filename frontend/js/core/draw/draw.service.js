@@ -10,7 +10,8 @@ angular.module("core.draw").
 					break;
 				// case 3 : return "LINE_CHART";
 				// case 4 : return "AREA_CHART";
-				// case 5 : return "BUBBLE_CHART";
+				case 5 : bubble_chart("#chart"+id+" svg",data);
+					break;
 				// case 6 : return "COMBO_BAR_LINE_CHART";
 				default : return;
 			}

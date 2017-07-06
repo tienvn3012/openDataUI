@@ -94,7 +94,7 @@ angular.module("core.chartValid").
 		}
 
 		this.bubbleChartValid = function(labels,data_title,data_percent){
-			if(data_title.length == 3)
+			if((data_title.length == 3) || (labels.length == 3))
 				return true;
 			return false;
 		}
@@ -103,6 +103,41 @@ angular.module("core.chartValid").
 			return false;
 		}
 
+		this.parseToLineData = function(labels,data,data_title,data_percent){
+
+		}
+
+		this.parseToAreaData = function(labels,data,data_title,data_percent){
+
+		}
+
+		this.parseToBubbleData = function(labels,data,data_title,data_percent){
+			var chart_data = [];
+			var temp = {};
+			temp['key'] = "Key";
+			temp['values'] = [];
+			if(data_title.length == 3){
+				for (var i = 0; i < labels.length; i++) {
+					temp['values'].push(
+						{
+							shape 	: randomGroup(),
+							size 	: data[0][i],
+							x 	 	: data[1][i],
+							y		: data[2][i],
+						}
+					);				
+				}
+
+				chart_data.push(temp);
+				return chart_data;
+			}else{
+
+			}
+		}
+
+		this.parseToComboData = function(labels,data,data_title,data_percent){
+
+		}
 
 		this.parseToPieData = function(labels,datas,data_title,data_percent){
 			var chart_data = [];
