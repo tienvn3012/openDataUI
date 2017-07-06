@@ -5,7 +5,7 @@ angular.module("inputData").
 		controller : ["$window","detectData" , function inputData($window,detectData) {
 			this.submit = function(){
 				allData = detectData.detect(this.input);
-				$window.location.href = "/frontend/#/index";
+				$window.location.href = "/frontend/#/dashboard";
 			}
 		}]
 	});

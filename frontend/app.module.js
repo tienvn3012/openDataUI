@@ -3,6 +3,8 @@ angular.module("openData",[
 	"core",
 	"console",
 	"tableData",
+	"dashboard",
+	"question",
 	"ngRoute",
 	"ngResource",
 	"inputData"

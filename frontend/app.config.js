@@ -8,6 +8,9 @@ angular.module("openData").
 			when("/index" , {
 				template : '<console></console><graph></graph><table-data></table-data>'
 			}).
+			when("/dashboard" , {
+				template : '<question></question><dashboard></dashboard>'
+			}).
 			otherwise("/input");
 
 	}]);

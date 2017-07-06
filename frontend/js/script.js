@@ -92,10 +92,24 @@ var x = [
 ];
 
 
+function pie_chart(id,data){
+	nv.addGraph(function() {
+  	var chart = nv.models.pieChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .showLabels(true);
+
+    d3.select(id)
+        .datum(data)
+        // .transition().duration(350)
+        .call(chart);
+
+  	return chart;
+	});
+}
 
 
-
-function bar_chart(data){
+function bar_chart(id,data){
 	nv.addGraph(function() {
     var chart = nv.models.multiBarChart()
       // .transitionDuration(300)
@@ -111,7 +125,7 @@ function bar_chart(data){
     // chart.yAxis
     //     .tickFormat(d3.format(',.1f'));
 
-    d3.select('#chart svg')
+    d3.select(id)
         .datum(data)
         .call(chart);
 
@@ -122,7 +136,7 @@ function bar_chart(data){
 }
 
 
-function horizontal_bar_chart(data){
+function horizontal_bar_chart(id,data){
 	 nv.addGraph(function() {
     var chart = nv.models.multiBarHorizontalChart()
         .x(function(d) { return d.x })
@@ -134,7 +148,7 @@ function horizontal_bar_chart(data){
         .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
 
 
-    d3.select('#chart svg')
+    d3.select(id)
         .datum(data)
         .call(chart);
 
@@ -448,7 +462,7 @@ function randomPosition(){
 	return Math.floor((Math.random() * 100))
 }
 
-function bubble_chart(){
+function bubble_chart(id,data){
 	nv.addGraph(function() {
   var chart = nv.models.scatterChart()
                 .showDistX(true)    //showDist, when true, will display those little distribution lines on the axis.
@@ -463,8 +477,8 @@ function bubble_chart(){
   //We want to show shapes other than circles.
   // chart.scatter.onlyCircles(false);
 
-  d3.select('#chart svg')
-      .datum(bubble_data)
+  d3.select(id)
+      .datum(data)
       .call(chart);
 
   nv.utils.windowResize(chart.update);
@@ -505,7 +519,7 @@ function cutData(data){ //cut each item in line by ","
 
 function IsNumeric(input){
     var RE = /^-{0,1}\d*\.{0,1}\d+$/;
-    return (RE.test(input));
+    return (RE.test(numeral(input).value()));
 }
 
 function classify(char){ //classify data
@@ -546,7 +560,7 @@ function classify(char){ //classify data
 	//need equal lenght in here first
 	// cut in min lenght of all column
 	cutMinData(cl,minLenghtData(cl));
-	
+	var label_flag = true;
 
 	for(var i=0;i<cl.length;i++){ //need fix with empty data and number data in string column
 		var f = true; 
@@ -574,15 +588,25 @@ function classify(char){ //classify data
 				if (fl) {
 					if(isYearsData(cl[i]['data'])){
 						cl[i]["type"] = 2;
+						cl[i]['label'] = label_flag;
+						if (label_flag) label_flag = false;
 					}else{
 						cl[i]["type"] = 3;
+						if(isPercentCol(cl[i]['data'])){
+							cl[i]['percent'] = true;
+						}else{
+							cl[i]['percent'] = false;
+						}
 					}
 				}else{
+
 					if(isDataDatetime(cl[i]['data'])){
 						cl[i]["type"] = 2;
 					}else{
 						cl[i]["type"] = 1;
 					}
+					cl[i]['label'] = label_flag;
+					if (label_flag) label_flag = false;
 				}
 			}
 		}else{
@@ -591,6 +615,24 @@ function classify(char){ //classify data
 	}
 
 	return cl;
+}
+
+
+function isPercent(input){
+	return input.search("\%") != -1 ? true : false;
+}
+function isPercentCol(data){
+	var flag = true;
+	for (var i = 0; i < data.length; i++) {
+		if(!isPercent(data[i])){
+			flag = false;
+			break
+		}
+	}
+	if(!flag){
+		return false;
+	}
+	return true;
 }
 
 function isDatetime(str){
