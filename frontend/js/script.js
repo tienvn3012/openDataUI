@@ -1,5 +1,6 @@
 
 var allData = null;
+var allChart=[];
 
 var formats = [
     moment.ISO_8601,
@@ -103,7 +104,7 @@ function pie_chart(id,data){
         .datum(data)
         // .transition().duration(350)
         .call(chart);
-
+    allChart.push(chart);
   	return chart;
 	});
 }
@@ -130,7 +131,7 @@ function bar_chart(id,data){
         .call(chart);
 
     nv.utils.windowResize(chart.update);
-
+    allChart.push(chart);
     return chart;
 	});
 }
@@ -153,7 +154,7 @@ function horizontal_bar_chart(id,data){
         .call(chart);
 
     nv.utils.windowResize(chart.update);
-
+    allChart.push(chart);
     return chart;
   });
 }
@@ -482,7 +483,7 @@ function bubble_chart(id,data){
       .call(chart);
 
   nv.utils.windowResize(chart.update);
-
+  allChart.push(chart);
   return chart;
 });
 }
@@ -541,7 +542,7 @@ function classify(char){ //classify data
 			labels = char[i];
 			for(var k=0;k<char[i].length;k++){
 				var obj = {};
-				obj["label"] = char[i][k];
+				obj["title"] = char[i][k];
 				obj['data'] = [];
 				obj['type'] = 0;
 				cl.push(obj);
@@ -588,6 +589,13 @@ function classify(char){ //classify data
 				if (fl) {
 					if(isYearsData(cl[i]['data'])){
 						cl[i]["type"] = 2;
+						if(isCategory(cl[i]['data'])){
+							cl[i]['category'] = true;
+							cl[i]['label'] = false;
+							continue;
+						}else{
+							cl[i]['category'] = false;
+						}
 						cl[i]['label'] = label_flag;
 						if (label_flag) label_flag = false;
 					}else{
@@ -605,6 +613,13 @@ function classify(char){ //classify data
 					}else{
 						cl[i]["type"] = 1;
 					}
+					if(isCategory(cl[i]['data'])){
+						cl[i]['category'] = true;
+						cl[i]['label'] = false;
+						continue;
+					}else{
+						cl[i]['category'] = false;
+					}
 					cl[i]['label'] = label_flag;
 					if (label_flag) label_flag = false;
 				}
@@ -613,6 +628,7 @@ function classify(char){ //classify data
 			cl[i]['type'] = 4;
 		}
 	}
+
 
 	return cl;
 }
@@ -660,7 +676,9 @@ function isYearsData(array){
 	var flag = true;
 	for (var i = 0; i < array.length; i++) {
 		if(isYear(array[i])){
-			if(((i+1) < array.length) && (0<Math.abs(array[i])<=10)){
+			if(((i+1) < array.length) && (0<Math.abs(array[i] - array[i+1])<=10)){ //for 
+				continue;
+			}else if(i+1 == array.length){ //for the last item 
 				continue;
 			}
 			flag = false;
@@ -675,6 +693,39 @@ function isYearsData(array){
 		return false;
 	}
 	return true;
+}
+
+function isCategory(data){
+	var lis_count = [];
+	for (var i = 0; i < data.length; i++) {
+		var flag = false;
+		for (var j = 0; j < lis_count.length; j++) {
+			if (lis_count[j]['title'] === data[i]) {
+				lis_count[j]['count']+=1;
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			lis_count.push({
+				title : data[i],
+				count : 1
+			});
+		}
+	}
+
+	var t = 0;
+	for (var i = 0; i < lis_count.length; i++) {
+		if (lis_count[i]['count'] >= (data.length*0.3)) {
+			return true;
+		}
+		if (lis_count[i]['count'] >= 2) t+=1;
+	}
+
+	if(t> lis_count.length*0.2)
+		return true;
+	return false;
+
 }
 
 function minLenghtData(data){ //min of all column
@@ -700,6 +751,32 @@ function cutMinData(data,min){ // cut data to min lenght
 				data[i]['data'].pop();
 			}
 		}
+	}
+}
+
+function cutArray(array,index,offset){
+	if(index < 0 || offset < 0)
+		return [];
+	if (array.length < index)
+		return [];
+	if ((offset > array.length) || (offset+index > array.length))
+		return array;
+
+	var cut = [];
+	for (var i = 0; i < offset; i++) {
+		cut.push(array[index]);
+		index+=1;
+	}
+	return cut;
+}
+
+function cutArrayByIndexes(array,indexes){
+	var cut = [];
+
+	for (var i = 0; i < indexes.length; i++) {
+		if(0 > indexes[i] || indexes[i] > array.length)
+			continue;
+		cut.push(array[indexes[i]]);
 	}
 }
 

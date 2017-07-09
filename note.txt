@@ -15,6 +15,9 @@ chart_id :
 5 : bubble chart
 6 : combo bar-line chart
 
+
+for pie chart , it only draw when we have only one column with %
+
 labels have years ?
 	true{
 		all year ? 
@@ -35,3 +38,15 @@ labels have years ?
 					false -> bar
 			}
 	}
+
+	1 data item loop 30%
+	>= 20% data item loop >=2
+
+	1 data -> array of array id and array data can draw
+	ex : 
+	[
+		{
+			chart_id 	: [[0,0,0,0..],[1,1,1..],...]
+			chart_data  : [[[data],[data],[data],...],[[data],[data],[data],....]]
+		}
+	]

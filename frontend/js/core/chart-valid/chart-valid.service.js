@@ -4,114 +4,121 @@ angular.module("core.chartValid").
 
 		this.chartValid = [
 			{
-				name : function(labels,data_title,data_percent){
-					return self.verticalBarChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.verticalBarChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToVerticalBarData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToVerticalBarData(labels,data_labels,datas);
 				},
 				id : 0
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.horizontalBarChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.horizontalBarChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToHorizontalBarData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToHorizontalBarData(labels,data_labels,datas);
 				},
 				id : 1
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.pieChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.pieChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToPieData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToPieData(labels,data_labels,datas);
 				},
 				id : 2
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.lineChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.lineChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToLineData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToLineData(labels,data_labels,datas);
 				},
 				id : 3
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.areaChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.areaChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToAreaData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToAreaData(labels,data_labels,datas);
 				},
 				id : 4
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.bubbleChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.bubbleChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToBubbleData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToBubbleData(labels,data_labels,datas);
 				},
 				id : 5
 			},
 			{
-				name : function(labels,data_title,data_percent){
-					return self.comboChartValid(labels,data_title,data_percent);
+				name : function(labels,data_labels,datas){
+					return self.comboChartValid(labels,data_labels,datas);
 				},
-				data : function(labels,datas,data_title,data_percent){
-					return self.parseToComboData(labels,datas,data_title,data_percent);
+				data : function(labels,data_labels,datas){
+					return self.parseToComboData(labels,data_labels,datas);
 				},
 				id : 6
 			},
 		];
 
 
-		this.verticalBarChartValid = function(labels,data_title,data_percent){
+		this.verticalBarChartValid = function(labels,data_labels,datas){
 			return true;
 		}
 
-		this.horizontalBarChartValid = function(labels,data_title,data_percent){
+		this.horizontalBarChartValid = function(labels,data_labels,datas){
 			return true;
 		}
 
-		this.pieChartValid = function(labels,data_title,data_percent){
-			if(data_percent.length == 1)
-				if (data_percent[0])
-					return true;
+		this.pieChartValid = function(labels,data_labels,datas){
+			// if(data_percent.length == 1)
+			// 	if (data_percent[0])
+			// 		return true;
 
 			return false;
 		}
 
-		this.lineChartValid = function(labels,data_title,data_percent){
+		this.lineChartValid = function(labels,data_labels,datas){
 			return false;
 		}
 
-		this.areaChartValid = function(labels,data_title,data_percent){
+		this.areaChartValid = function(labels,data_labels,datas){
 			return false;
 		}
 
-		this.bubbleChartValid = function(labels,data_title,data_percent){
-			if((data_title.length == 3) || (labels.length == 3))
-				return true;
+		this.bubbleChartValid = function(labels,data_labels,datas){
+			// if(data_title.length < 3 && labels.length < 3)
+			// 	return false;
+			// for (var i = 0; i < data_category.length; i++) {
+			// 	if(data_category[i] && data_title >= 3)
+			// 		return true;
+			// }
+
+			// if((data_title.length == 3) || (labels.length == 3))
+			// 	return true;
 			return false;
 		}
 
-		this.comboChartValid = function(labels,data_title,data_percent){
+		this.comboChartValid = function(labels,data_labels,datas){
 			return false;
 		}
 
-		this.parseToLineData = function(labels,data,data_title,data_percent){
+		this.parseToLineData = function(labels,data_labels,datas){
 
 		}
 
-		this.parseToAreaData = function(labels,data,data_title,data_percent){
+		this.parseToAreaData = function(labels,data_labels,datas){
 
 		}
 
-		this.parseToBubbleData = function(labels,data,data_title,data_percent){
+		this.parseToBubbleData = function(labels,data_labels,datas){
 			var chart_data = [];
 			var temp = {};
 			temp['key'] = "Key";
@@ -135,11 +142,11 @@ angular.module("core.chartValid").
 			}
 		}
 
-		this.parseToComboData = function(labels,data,data_title,data_percent){
+		this.parseToComboData = function(labels,data_labels,datas){
 
 		}
 
-		this.parseToPieData = function(labels,datas,data_title,data_percent){
+		this.parseToPieData = function(labels,data_labels,datas){
 			var chart_data = [];
 			for (var i = 0; i < labels.length; i++) {
 				chart_data.push(
@@ -152,24 +159,12 @@ angular.module("core.chartValid").
 			return chart_data;
 		}
 
-		this.parseToVerticalBarData = function(labels,datas,data_title,data_percent){
-			var chart_data = [];
-			if(labels.length >= datas.length){
-					chart_data = this.parseAllowCol(labels,datas,data_title);
-			}else{
-					chart_data = this.parseAllowRow(labels,datas,data_title);
-			}
-			return chart_data;
+		this.parseToVerticalBarData = function(labels,data_labels,datas){
+			return self.parseToBarData(labels,data_labels,datas);
 		}
 
-		this.parseToHorizontalBarData = function(labels,datas,data_title,data_percent){
-			var chart_data = [];
-			if(labels.length >= datas.length){
-					chart_data = this.parseAllowCol(labels,datas,data_title);
-			}else{
-					chart_data = this.parseAllowRow(labels,datas,data_title);
-			}
-			return chart_data;
+		this.parseToHorizontalBarData = function(labels,data_labels,datas){
+			return self.parseToBarData(labels,data_labels,datas);
 		}
 
 		this.parseAllowRow = function(labels,datas,data_title){
@@ -207,5 +202,38 @@ angular.module("core.chartValid").
 			}
 			return chart_data;
 		}
+
+
+		this.parseToBarData = function(labels,data_labels,datas){
+			var chart_data = [];
+			var chart = null;
+			var data = [];
+			var data_title = [];
+			var index;
+			var offset;
+
+			for (var i = 0; i < datas.length; i++) {
+				data.push(datas[i]['data']);
+				data_title.push(datas[i]['title']);
+			}
+
+			
+			for (var i = 0; i < datas.length; i+=3) {
+				chart = null;
+				index = i;
+				i+3 > datas.length ? (offset = datas.length - i):offset = 3;
+
+				if(labels['data'].length >= datas.length){
+					chart = self.parseAllowCol(labels['data'],cutArray(data,index,offset),cutArray(data_title,index,offset));
+			    }else{
+					chart = self.parseAllowRow(labels['data'],cutArray(data,index,offset),cutArray(data_title,index,offset));
+			    }
+
+			    chart_data.push(chart);	
+			}
+
+			return chart_data;
+		}
+
 
 	});

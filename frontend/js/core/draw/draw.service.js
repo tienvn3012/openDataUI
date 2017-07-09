@@ -1,17 +1,17 @@
 angular.module("core.draw").
 	factory("drawService", function(){
-		function classifyDraw(id,data){
+		function classifyDraw(id,data_id,data){
 			switch(id){
-				case 0 : bar_chart("#chart"+id+" svg",data);
+				case 0 : bar_chart("#chart"+id+"-"+data_id+" svg",data);
 					break;
-				case 1 : horizontal_bar_chart("#chart"+id+" svg",data);
+				case 1 : horizontal_bar_chart("#chart"+id+"-"+data_id+" svg",data);
 					break;
-				case 2 : pie_chart("#chart"+id+" svg",data);
-					break;
+				// case 2 : pie_chart("#chart"+id+" svg",data);
+				// 	break;
 				// case 3 : return "LINE_CHART";
 				// case 4 : return "AREA_CHART";
-				case 5 : bubble_chart("#chart"+id+" svg",data);
-					break;
+				// case 5 : bubble_chart("#chart"+id+" svg",data);
+				// 	break;
 				// case 6 : return "COMBO_BAR_LINE_CHART";
 				default : return;
 			}
@@ -20,16 +20,14 @@ angular.module("core.draw").
 		return {
 			draw: function(chart_id,data){
 				d3.selectAll("svg > *").remove();
-				if(chart_id[0] == 0){
-					bar_chart(data);
-				}else if(chart_id[1] ==1){
-					horizontal_bar_chart(data);
-				}
+				classifyDraw(chart_id,data);
 			},
 
-			drawAll : function(allChartId,allChartData){
-				for (var i = 0; i < allChartId.length; i++) {
-					classifyDraw(allChartId[i],allChartData[i]);
+			drawAll : function(allChartData){
+				for (var i = 0; i < allChartData.length; i++) {
+					for (var j = 0; j < allChartData[i]['data'].length; j++) {
+						classifyDraw(allChartData[i]['chart'],j,allChartData[i]['data'][j]);
+					}
 				}
 			}
 		};

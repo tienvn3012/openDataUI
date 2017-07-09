@@ -19,6 +19,16 @@ angular.module("dashboard").
            		    resize: function (event, uiWidget, $element) {
            	    	}, // optional callback fired when item is resized,
             	    stop: function (event, uiWidget, $element) {
+                        
+                        var e = event.target;
+                        var width   = angular.element(e).parent().css("width");
+                        var height  = angular.element(e).parent().css("height");
+                        angular.element(e).parent().find("svg").width(width);
+                        angular.element(e).parent().find("svg").height(height);
+                        for (var i = 0; i < allChart.length; i++) {
+                            allChart[i].update();
+                        }
+                        // drawService.draw(obj['chart'],obj['data']);
             	    } // optional callback fired when item is finished resizing
             	},
             	draggable: {
@@ -57,14 +67,17 @@ angular.module("dashboard").
             this.items = dashboardService.renderItems(allData);
             var  obj   = dashboardService.parseToChartData(this.items);
 
-            for (var i = 0; i < obj['chart'].length; i++) {
-                this.dashboardItems.push({
-                    title : dashboardService.classifyChartId(obj['chart'][i]),
-                    id    : "chart"+obj['chart'][i]
-                });
+            for (var i = 0; i < obj.length; i++) {
+                for (var j = 0; j < obj[i]['data'].length; j++) {
+                        this.dashboardItems.push({
+                        title   : dashboardService.classifyChartId(obj[i]['chart']),
+                        id      : "chart"+obj[i]['chart']+"-"+j,
+                        type    : obj[i]['chart']
+                    });
+                }  
             }
 
             
-            drawService.drawAll(obj['chart'],obj['data']);
+            drawService.drawAll(obj);
 		}]
 	});

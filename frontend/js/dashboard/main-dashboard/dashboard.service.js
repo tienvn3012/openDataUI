@@ -7,12 +7,18 @@ angular.module("dashboard").
 				item = {};
 				item['index'] = i;
 				item['type'] = data[i]['type'];
-				item['title'] = data[i]['label'];
+				item['title'] = data[i]['title'];
+				item['label'] = data[i]['label'];
 				item['data'] = data[i]['data'];
 				item['percent'] = data[i]['percent'];
+				item['category'] = data[i]['category'];
 
+				var category_flag = true;
 				if((item['type'] == 1) || (item['type'] == 2) && item['label'] == true){
 					item['active'] = true;
+				}else if ((item['type'] == 1) || (item['type'] == 2) && category_flag == true) {
+					item['active'] = true;
+					category_flag = false;
 				}else if(item['type'] == 3){
 					item['active'] = true;
 				}else{
@@ -31,36 +37,48 @@ angular.module("dashboard").
 		
 			var labels = [];
 			var datas = [];
-			var data_title = [];
-			var data_percent = [];
-			var chart_id = [];
+			var data_labels = [];
+			var chart_id = null;
+
+
+			// var data_title = [];
+			// var data_percent = [];
+			// var chart_id = [];
+			// var data_category = [];
+
+
 
 			for (var i = 0; i < data.length; i++) {
-				if(data[i]['active']){
+				
 					if((data[i]['type'] == 1) || (data[i]['type'] == 2)){
-						labels = data[i]['data'];
+						if(data[i]['label']){
+							labels = data[i];
+							continue;
+						}
+						data_labels.push(data[i]);
 					}else{
-						datas.push(data[i]['data']);
-						data_title.push(data[i]['title']);
-						data_percent.push(data[i]['percent']);
+						datas.push(data[i]);
 					}
-				}
+				
 			}
 
 			for (var i = 0; i < chartValid.chartValid.length; i++) {
 				chart_data = [];
-				if(chartValid.chartValid[i].name(labels,data_title,data_percent)){
-					chart_id.push(chartValid.chartValid[i].id);
-					chart_data = chartValid.chartValid[i].data(labels,datas,data_title,data_percent);
-					all_chart_data.push(chart_data);
+				chart_id = 0;
+				if(chartValid.chartValid[i].name(labels,data_labels,datas)){
+
+					chart_id = chartValid.chartValid[i].id;
+					chart_data = chartValid.chartValid[i].data(labels,data_labels,datas);
+					
+					all_chart_data.push({
+						chart : chart_id,
+						data  : chart_data
+					});
 				}
 			}
 
 
-			return {
-				chart : chart_id,
-				data : all_chart_data
-			};
+			return all_chart_data;
 		}
 
 		this.classifyChartId = function(id){
