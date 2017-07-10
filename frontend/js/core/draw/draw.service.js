@@ -6,12 +6,12 @@ angular.module("core.draw").
 					break;
 				case 1 : horizontal_bar_chart("#chart"+id+"-"+data_id+" svg",data);
 					break;
-				// case 2 : pie_chart("#chart"+id+" svg",data);
-				// 	break;
+				case 2 : pie_chart("#chart"+id+"-"+data_id+" svg",data);
+					break;
 				// case 3 : return "LINE_CHART";
 				// case 4 : return "AREA_CHART";
-				// case 5 : bubble_chart("#chart"+id+" svg",data);
-				// 	break;
+				case 5 : bubble_chart("#chart"+id+"-"+data_id+" svg",data);
+					break;
 				// case 6 : return "COMBO_BAR_LINE_CHART";
 				default : return;
 			}

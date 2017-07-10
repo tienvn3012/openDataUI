@@ -78,11 +78,7 @@ angular.module("core.chartValid").
 		}
 
 		this.pieChartValid = function(labels,data_labels,datas){
-			// if(data_percent.length == 1)
-			// 	if (data_percent[0])
-			// 		return true;
-
-			return false;
+			return true;
 		}
 
 		this.lineChartValid = function(labels,data_labels,datas){
@@ -94,15 +90,8 @@ angular.module("core.chartValid").
 		}
 
 		this.bubbleChartValid = function(labels,data_labels,datas){
-			// if(data_title.length < 3 && labels.length < 3)
-			// 	return false;
-			// for (var i = 0; i < data_category.length; i++) {
-			// 	if(data_category[i] && data_title >= 3)
-			// 		return true;
-			// }
-
-			// if((data_title.length == 3) || (labels.length == 3))
-			// 	return true;
+			if(datas.length > 2)
+				return true;
 			return false;
 		}
 
@@ -120,26 +109,82 @@ angular.module("core.chartValid").
 
 		this.parseToBubbleData = function(labels,data_labels,datas){
 			var chart_data = [];
-			var temp = {};
-			temp['key'] = "Key";
-			temp['values'] = [];
-			if(data_title.length == 3){
-				for (var i = 0; i < labels.length; i++) {
-					temp['values'].push(
-						{
-							shape 	: randomGroup(),
-							size 	: data[0][i],
-							x 	 	: data[1][i],
-							y		: data[2][i],
-						}
-					);				
+			var chart = [];
+			var category = [];
+			var index;
+			var offset;
+
+			for (var i = 0; i < data_labels.length; i++) {
+				if(data_labels[i]['category']){
+					category.push(data_labels[i]);
+				}
+			}
+
+			for (var i = 0; i < datas.length; i+=3) {
+				chart = [];
+				index = i;
+				i+3 > datas.length ? (index = i - datas.length - i):offset = 3;
+
+				var temp = {};
+				temp['values'] = [];
+				temp['key'] = labels['title'];
+				for (var j = 0; j < labels['data'].length; j++) {
+					
+					temp['values'].push({
+						shape 	: 'circle',
+						size 	: datas[index]['data'][j],
+						x 	 	: datas[index+1]['data'][j],
+						y		: datas[index+2]['data'][j],
+					});
+				}
+				chart.push(temp);
+
+			    chart_data.push(chart);	
+			}
+
+			for (var k = 0; k < datas.length; k+=3) {
+				chart = [];
+				index = k;
+				k+3 > datas.length ? (index = k - datas.length - k):offset = 3;
+
+				for (var i = 0; i < category.length; i++) {
+					for (var j = 0; j < category[i]['data'].length; j++) {
+						var values = {
+							shape 	: 'circle',
+							size 	: datas[index]['data'][j],
+							x 	 	: datas[index+1]['data'][j],
+							y		: datas[index+2]['data'][j],
+						};
+						temp = self.categoryClassify(chart,category[i]['data'][j],values);
+					}
 				}
 
-				chart_data.push(temp);
-				return chart_data;
-			}else{
+				chart_data.push(chart);
 
 			}
+
+			
+
+			return chart_data;
+		}
+
+		this.categoryClassify = function(array,key,values){
+			var flag = true;
+			for (var i = 0; i < array.length; i++) {
+				if(array[i]['key'] == key){
+					flag = false;
+					array[i]['values'].push(values);
+					break;
+				}
+			}
+			if(flag){
+				var temp = {};
+				temp['key'] = key;
+				temp['values'] = [];
+				temp['values'].push(values);
+				array.push(temp);
+			}
+			return array;
 		}
 
 		this.parseToComboData = function(labels,data_labels,datas){
@@ -148,14 +193,20 @@ angular.module("core.chartValid").
 
 		this.parseToPieData = function(labels,data_labels,datas){
 			var chart_data = [];
-			for (var i = 0; i < labels.length; i++) {
-				chart_data.push(
-					{
-						label : labels[i],
-						value : numeral(datas[0][i]).value()*100
-					}
-				);
+			var chart = [];
+
+			for (var i = 0; i < datas.length; i++) {
+				var s = sloveTotalArray(datas[i]['data']);
+				chart = [];
+				for (var j = 0; j < labels['data'].length; j++) {
+					chart.push({
+						label  : labels['data'][j],
+						values : (numeral((datas[i]['data'])[j]).value()*100)/s
+					});
+				}
+				chart_data.push(chart);
 			}
+
 			return chart_data;
 		}
 
@@ -230,6 +281,22 @@ angular.module("core.chartValid").
 			    }
 
 			    chart_data.push(chart);	
+			}
+
+			for (var i = 0; i < data_labels.length; i++) {
+				for (var j = 0; j < datas.length; j+=3) {
+					chart = null;
+					index = j;
+					j+3 > datas.length ? (offset = datas.length - j):offset = 3;
+
+				if(data_labels[i]['data'].length >= datas.length){
+					chart = self.parseAllowCol(data_labels[i]['data'],cutArray(data,index,offset),cutArray(data_title,index,offset));
+			    }else{
+					chart = self.parseAllowRow(data_labels[i]['data'],cutArray(data,index,offset),cutArray(data_title,index,offset));
+			    }
+
+			    chart_data.push(chart);	
+				}
 			}
 
 			return chart_data;

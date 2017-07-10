@@ -97,8 +97,9 @@ function pie_chart(id,data){
 	nv.addGraph(function() {
   	var chart = nv.models.pieChart()
       .x(function(d) { return d.label })
-      .y(function(d) { return d.value })
+      .y(function(d) { return d.values })
       .showLabels(true);
+
 
     d3.select(id)
         .datum(data)
@@ -778,5 +779,13 @@ function cutArrayByIndexes(array,indexes){
 			continue;
 		cut.push(array[indexes[i]]);
 	}
+}
+
+function sloveTotalArray(array){
+	var t = 0;
+	for (var i = 0; i < array.length; i++) {
+		t+=Math.abs(array[i]);
+	}
+	return t;
 }
 
