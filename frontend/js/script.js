@@ -269,7 +269,7 @@ var line_data = [ //data demo
   },
 ];
 
-function line_chart(){
+function line_chart(id,data){
 	nv.addGraph(function() {
   var chart = nv.models.lineChart()
                 .margin({left: 100})  //Adjust chart margins to give the x-axis some breathing room.
@@ -280,23 +280,23 @@ function line_chart(){
                 .showXAxis(true)        //Show the x-axis
   ;
 
-  chart.xAxis     //Chart x-axis settings
-      .axisLabel('Time (ms)')
-      .tickFormat(d3.format(',r'));
+  // chart.xAxis     //Chart x-axis settings
+  //     .axisLabel('Time');
 
-  chart.yAxis     //Chart y-axis settings
-      .axisLabel('Voltage (v)')
-      .tickFormat(d3.format('.02f'));
+  // chart.yAxis     //Chart y-axis settings
+  //     .axisLabel('Voltage (v)')
+  //     .tickFormat(d3.format('.02f'));
 
   /* Done setting the chart up? Time to render it!*/
   // var myData = sinAndCos();   //You need data...
 
-  d3.select('#chart svg')    //Select the <svg> element you want to render the chart in.   
-      .datum(line_data)         //Populate the <svg> element with chart data...
+  d3.select(id)    //Select the <svg> element you want to render the chart in.   
+      .datum(data)         //Populate the <svg> element with chart data...
       .call(chart);          //Finally, render the chart!
 
   //Update the chart when window resizes.
-  nv.utils.windowResize(function() { chart.update() });
+  nv.utils.windowResize(chart.update());
+  allChart.push(chart);
   return chart;
 });
 }
@@ -521,7 +521,7 @@ function cutData(data){ //cut each item in line by ","
 
 function IsNumeric(input){
     var RE = /^-{0,1}\d*\.{0,1}\d+$/;
-    return (RE.test(numeral(input).value()));
+    return (RE.test(input));
 }
 
 function classify(char){ //classify data

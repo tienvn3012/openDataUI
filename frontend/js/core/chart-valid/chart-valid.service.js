@@ -82,6 +82,12 @@ angular.module("core.chartValid").
 		}
 
 		this.lineChartValid = function(labels,data_labels,datas){
+			if(labels['type'] == 2)
+				return true;
+			for (var i = 0; i < data_labels.length; i++) {
+				if(data_labels[i]['type'] == 2)
+					return true;
+			}
 			return false;
 		}
 
@@ -90,6 +96,7 @@ angular.module("core.chartValid").
 		}
 
 		this.bubbleChartValid = function(labels,data_labels,datas){
+			return false;
 			if(datas.length > 2)
 				return true;
 			return false;
@@ -100,7 +107,45 @@ angular.module("core.chartValid").
 		}
 
 		this.parseToLineData = function(labels,data_labels,datas){
+			var chart_data = [];
+			var chart = [];
+			if (labels['type'] == 2) {
+				chart = [];
+				for (var i = 0; i < datas.length; i++) {
+					var temp = {}
+					temp['key'] = datas[i]['title'];
+					temp['values'] = [];
+					for (var j = 0; j < labels['data'].length; j++) {
+						temp['values'].push({
+							x : labels['data'][j],
+							y : datas[i]['data'][j]
+						});
+					}
+					chart.push(temp);
+				}
+				chart_data.push(chart);
+			}
 
+			for (var k = 0; k < data_labels.length; k++) {
+				if(data_labels[k]['type'] == 2){
+					chart = [];
+					for (var i = 0; i < datas.length; i++) {
+						var temp = {}
+						temp['key'] = datas[i]['title'];
+						temp['values'] = [];
+						for (var j = 0; j < data_labels[k]['data'].length; j++) {
+							temp['values'].push({
+								x : data_labels[k]['data'][j],
+								y : datas[i]['data'][j]
+							});
+						}
+						chart.push(temp);
+					}
+					chart_data.push(chart);
+				}
+			}
+
+			return chart_data;
 		}
 
 		this.parseToAreaData = function(labels,data_labels,datas){
@@ -111,8 +156,8 @@ angular.module("core.chartValid").
 			var chart_data = [];
 			var chart = [];
 			var category = [];
-			var index;
-			var offset;
+			var index=0;
+			var offset=0;
 
 			for (var i = 0; i < data_labels.length; i++) {
 				if(data_labels[i]['category']){
@@ -123,7 +168,7 @@ angular.module("core.chartValid").
 			for (var i = 0; i < datas.length; i+=3) {
 				chart = [];
 				index = i;
-				i+3 > datas.length ? (index = i - datas.length - i):offset = 3;
+				i+3 > datas.length ? (index = 2*i - datas.length - 2):offset = 3;
 
 				var temp = {};
 				temp['values'] = [];
@@ -145,7 +190,7 @@ angular.module("core.chartValid").
 			for (var k = 0; k < datas.length; k+=3) {
 				chart = [];
 				index = k;
-				k+3 > datas.length ? (index = k - datas.length - k):offset = 3;
+				k+3 > datas.length ? (index = 2*k - datas.length - 2):offset = 3;
 
 				for (var i = 0; i < category.length; i++) {
 					for (var j = 0; j < category[i]['data'].length; j++) {
@@ -155,7 +200,7 @@ angular.module("core.chartValid").
 							x 	 	: datas[index+1]['data'][j],
 							y		: datas[index+2]['data'][j],
 						};
-						temp = self.categoryClassify(chart,category[i]['data'][j],values);
+						chart = self.categoryClassify(chart,category[i]['data'][j],values);
 					}
 				}
 
@@ -168,24 +213,7 @@ angular.module("core.chartValid").
 			return chart_data;
 		}
 
-		this.categoryClassify = function(array,key,values){
-			var flag = true;
-			for (var i = 0; i < array.length; i++) {
-				if(array[i]['key'] == key){
-					flag = false;
-					array[i]['values'].push(values);
-					break;
-				}
-			}
-			if(flag){
-				var temp = {};
-				temp['key'] = key;
-				temp['values'] = [];
-				temp['values'].push(values);
-				array.push(temp);
-			}
-			return array;
-		}
+		
 
 		this.parseToComboData = function(labels,data_labels,datas){
 
@@ -302,5 +330,23 @@ angular.module("core.chartValid").
 			return chart_data;
 		}
 
+		this.categoryClassify = function(array,key,values){
+			var flag = true;
+			for (var i = 0; i < array.length; i++) {
+				if(array[i]['key'] == key){
+					flag = false;
+					array[i]['values'].push(values);
+					break;
+				}
+			}
+			if(flag){
+				var temp = {};
+				temp['key'] = key;
+				temp['values'] = [];
+				temp['values'].push(values);
+				array.push(temp);
+			}
+			return array;
+		}
 
 	});
