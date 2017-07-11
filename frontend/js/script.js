@@ -18,6 +18,21 @@ var number_format = [
 	"YYYY"
 ];
 
+var ddmmyyyy = [
+ "DD/MM/YYYY",
+ "DD-MM-YYYY",
+ "D/M/YYYY",
+ "DD/M/YYYY",
+ "D/MM/YYYY",
+ "D-M-YYYY",
+ "DD-M-YYYY",
+ "D-MM-YYYY"
+];
+
+var mmddyyyy=[];
+var yyyymmdd=[];
+var yyyyddmm=[];
+
 var x = [
 	{
 		key : "x1",
@@ -722,7 +737,7 @@ function isCategory(data){
 
 	var t = 0;
 	for (var i = 0; i < lis_count.length; i++) {
-		if (lis_count[i]['count'] >= (data.length*0.3)) {
+		if ((lis_count[i]['count'] > 1) && (lis_count[i]['count'] >= (data.length*0.3))) {
 			return true;
 		}
 		if (lis_count[i]['count'] >= 2) t+=1;

@@ -134,6 +134,10 @@ angular.module("core.chartValid").
 						temp['key'] = datas[i]['title'];
 						temp['values'] = [];
 						for (var j = 0; j < data_labels[k]['data'].length; j++) {
+							console.log(data_labels[k]['data'][j]);
+							console.log(typeof data_labels[k]['data'][j]);
+							console.log(new Date(data_labels[k]['data'][j]));
+							console.log((new Date(data_labels[k]['data'][j])).getTime());
 							temp['values'].push({
 								x : (new Date(data_labels[k]['data'][j])).getTime(),
 								y : numeral(datas[i]['data'][j].replace(" ","")).value()
