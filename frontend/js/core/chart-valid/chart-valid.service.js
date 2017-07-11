@@ -117,8 +117,8 @@ angular.module("core.chartValid").
 					temp['values'] = [];
 					for (var j = 0; j < labels['data'].length; j++) {
 						temp['values'].push({
-							x : labels['data'][j],
-							y : datas[i]['data'][j]
+							x : (new Date(labels['data'][j])).getTime(),
+							y : numeral(datas[i]['data'][j].replace(" ","")).value()
 						});
 					}
 					chart.push(temp);
@@ -135,8 +135,8 @@ angular.module("core.chartValid").
 						temp['values'] = [];
 						for (var j = 0; j < data_labels[k]['data'].length; j++) {
 							temp['values'].push({
-								x : data_labels[k]['data'][j],
-								y : datas[i]['data'][j]
+								x : (new Date(data_labels[k]['data'][j])).getTime(),
+								y : numeral(datas[i]['data'][j].replace(" ","")).value()
 							});
 						}
 						chart.push(temp);
@@ -229,7 +229,7 @@ angular.module("core.chartValid").
 				for (var j = 0; j < labels['data'].length; j++) {
 					chart.push({
 						label  : labels['data'][j],
-						values : (numeral((datas[i]['data'])[j]).value()*100)/s
+						values : (numeral((datas[i]['data'])[j].replace(" ","")).value()*100)/s
 					});
 				}
 				chart_data.push(chart);

@@ -280,15 +280,15 @@ function line_chart(id,data){
                 .showXAxis(true)        //Show the x-axis
   ;
 
-  // chart.xAxis     //Chart x-axis settings
-  //     .axisLabel('Time');
-
+  chart.xAxis     //Chart x-axis settings
+      .axisLabel('Time');
+chart.xAxis
+        .tickFormat(function(d) { 
+          return d3.time.format('%x')(new Date(d)) 
+    });
   // chart.yAxis     //Chart y-axis settings
   //     .axisLabel('Voltage (v)')
   //     .tickFormat(d3.format('.02f'));
-
-  /* Done setting the chart up? Time to render it!*/
-  // var myData = sinAndCos();   //You need data...
 
   d3.select(id)    //Select the <svg> element you want to render the chart in.   
       .datum(data)         //Populate the <svg> element with chart data...
@@ -521,7 +521,8 @@ function cutData(data){ //cut each item in line by ","
 
 function IsNumeric(input){
     var RE = /^-{0,1}\d*\.{0,1}\d+$/;
-    return (RE.test(input));
+    var result =  (RE.test(numeral(input.replace(" ", "")).value()));
+    return result;
 }
 
 function classify(char){ //classify data
@@ -532,8 +533,10 @@ function classify(char){ //classify data
 		var flag = true;
 		for(var j=0;j<char[i].length;j++){
 			if(IsNumeric(char[i][j])){
-				flag = false;
-				break;
+				if(!isYear(char[i][j])){
+					flag = false;
+					break;
+				}
 			}
 		}
 		if(!flag){
@@ -588,7 +591,7 @@ function classify(char){ //classify data
 				cl[i]['type'] = 0;
 			}else{
 				if (fl) {
-					if(isYearsData(cl[i]['data'])){
+					if(isYearsData(cl[i]['data']) || isDataDatetime(cl[i]['data'])){
 						cl[i]["type"] = 2;
 						if(isCategory(cl[i]['data'])){
 							cl[i]['category'] = true;
@@ -653,11 +656,13 @@ function isPercentCol(data){
 }
 
 function isDatetime(str){
-	return moment(str, formats, true).isValid();
+	var t =  moment(str.replace(" ", ""), formats, true).isValid();
+	return t;
 }
 
 function isYear(str){
-	return moment(str,number_format,true).isValid();
+	var t = moment(str.replace(" ", ""),number_format,true).isValid();
+	return t;
 }
 
 function isDataDatetime(array_data){
@@ -784,7 +789,7 @@ function cutArrayByIndexes(array,indexes){
 function sloveTotalArray(array){
 	var t = 0;
 	for (var i = 0; i < array.length; i++) {
-		t+=Math.abs(array[i]);
+		t+=Math.abs(numeral(array[i].replace(" ","")).value());
 	}
 	return t;
 }
