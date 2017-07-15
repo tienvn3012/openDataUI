@@ -88,6 +88,15 @@ angular.module("core.chartValid").
 				if(data_labels[i]['type'] == 2)
 					return true;
 			}
+
+			var count = 0;
+			for (var i = 0; i < datas.length; i++) {
+				if((isYear(datas[i]['title']) || isDatetime(datas[i]['title']))){
+					count+=1;
+				}
+			}
+			if(count > 2)
+				return true;
 			return false;
 		}
 
@@ -109,6 +118,7 @@ angular.module("core.chartValid").
 		this.parseToLineData = function(labels,data_labels,datas){
 			var chart_data = [];
 			var chart = [];
+			var year_data = [];
 			if (labels['type'] == 2) {
 				chart = [];
 				for (var i = 0; i < datas.length; i++) {
@@ -134,10 +144,6 @@ angular.module("core.chartValid").
 						temp['key'] = datas[i]['title'];
 						temp['values'] = [];
 						for (var j = 0; j < data_labels[k]['data'].length; j++) {
-							console.log(data_labels[k]['data'][j]);
-							console.log(typeof data_labels[k]['data'][j]);
-							console.log(new Date(data_labels[k]['data'][j]));
-							console.log((new Date(data_labels[k]['data'][j])).getTime());
 							temp['values'].push({
 								x : (new Date(data_labels[k]['data'][j])).getTime(),
 								y : numeral(datas[i]['data'][j].replace(" ","")).value()
@@ -149,6 +155,28 @@ angular.module("core.chartValid").
 				}
 			}
 
+			for (var i = 0; i < datas.length; i++) {
+				if((isYear(datas[i]['title']) || isDatetime(datas[i]['title'])))
+					year_data.push(datas[i]);
+			}
+
+			if(year_data.length!=0){
+				chart = [];
+				for (var i = 0; i < labels['data'].length; i++) {
+					var temp = {};
+					temp['key'] = labels['data'][i];
+					temp['values'] = [];
+					for (var j = 0; j < year_data.length; j++) {
+						temp['values'].push({
+							x : (new Date(year_data[j]['title'])).getTime(),
+							y : numeral(year_data[j]['data'][i].replace(" ","")).value()
+						});
+					}
+					chart.push(temp);
+				}
+				chart_data.push(chart);
+
+			}
 			return chart_data;
 		}
 

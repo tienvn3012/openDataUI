@@ -130,7 +130,7 @@ function bar_chart(id,data){
 	nv.addGraph(function() {
     var chart = nv.models.multiBarChart()
       // .transitionDuration(300)
-      .reduceXTicks(true)   //If 'false', every single x-axis tick label will be rendered.
+      .reduceXTicks(false)   //If 'false', every single x-axis tick label will be rendered.
       .rotateLabels(0)      //Angle to rotate x-axis labels.
       .showControls(true)   //Allow user to switch between 'Grouped' and 'Stacked' mode.
       .groupSpacing(0.1)    //Distance between each group of bars.
@@ -139,8 +139,9 @@ function bar_chart(id,data){
     // chart.xAxis
     //     .tickFormat(d3.format(',f'));
 
-    // chart.yAxis
-    //     .tickFormat(d3.format(',.1f'));
+  	chart.yAxis     //Chart y-axis settings
+      .axisLabel('Voltage (v)')
+      .tickFormat(d3.format('.2s'));
 
     d3.select(id)
         .datum(data)
@@ -160,9 +161,12 @@ function horizontal_bar_chart(id,data){
         .y(function(d) { return d.y })
         // .margin({top: 30, right: 20, bottom: 50, left: 175})
         .showValues(true)           //Show bar value next to each bar.
-        // .tooltips(true)             //Show tooltips on hover.
         // .transitionDuration(350)
         .showControls(true);        //Allow user to switch between "Grouped" and "Stacked" mode.
+        
+  	chart.yAxis     //Chart y-axis settings
+      .axisLabel('Voltage (v)')
+      .tickFormat(d3.format('.2s'));
 
 
     d3.select(id)
